@@ -1,0 +1,21 @@
+.ul {
+  padding: 20px;
+  margin: 0 40px;
+}
+
+.li {
+  font-family: inherit;
+  font-size: 20px;
+  line-height: 1.71;
+}
+
+.btn {
+  display: inline-block;
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 400;
+  font-size: 16px;
+  margin-left: 20px;
+}
