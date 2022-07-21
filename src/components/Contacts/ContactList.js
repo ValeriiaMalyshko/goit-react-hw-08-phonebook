@@ -1,9 +1,10 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 import Contact from './Contact';
-import s from './Contact.module.css';
+// import s from './Contact.module.css';
 import { useFetchContactsQuery } from 'redux/contactsSlice';
 import { useSelector } from 'react-redux';
+import { ListGroup } from 'react-bootstrap';
 
 const ContactList = () => {
   const { data } = useFetchContactsQuery();
@@ -15,11 +16,13 @@ const ContactList = () => {
     );
 
     return (
-      <ul className={s.ul}>
+      // <ul className={s.ul}>
+      <ListGroup>
         {visibleContacts.map(({ id, name, phone }) => {
           return <Contact key={id} id={id} name={name} phone={phone} />;
         })}
-      </ul>
+      </ListGroup>
+      // </ul>
     );
   }
 };
