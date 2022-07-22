@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { authOperations } from '../../redux/auth/auth-operations';
+import logOut from '../../redux/auth/auth-operations';
 import { Card, Button } from 'react-bootstrap';
 
 const UserMenu = () => {
@@ -8,7 +8,7 @@ const UserMenu = () => {
   const getUsername = state => state.auth.user.name;
   const userName = useSelector(getUsername);
   const onLogout = () => {
-    dispatch(authOperations.logOut());
+    dispatch(logOut());
   };
 
   <Card.Body>
