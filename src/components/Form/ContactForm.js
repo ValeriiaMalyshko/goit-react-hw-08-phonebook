@@ -7,7 +7,7 @@ import { nanoid } from 'nanoid';
 import {
   useCreateContactMutation,
   useFetchContactsQuery,
-} from 'redux/contactsSlice';
+} from 'redux/contacts-Slice';
 import { Form, InputGroup, Button } from 'react-bootstrap';
 
 const ContactForm = () => {

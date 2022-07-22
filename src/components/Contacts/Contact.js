@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 // import s from './Contact.module.css';
-import { useDeleteContactMutation } from 'redux/contactsSlice';
+import { useDeleteContactMutation } from 'redux/contacts-Slice';
 import { Button, ListGroup } from 'react-bootstrap';
 
 export default function Contact({ id, name, phone }) {

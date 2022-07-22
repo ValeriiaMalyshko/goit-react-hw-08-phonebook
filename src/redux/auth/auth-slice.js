@@ -2,51 +2,53 @@ import { createSlice } from '@reduxjs/toolkit';
 import { register, logOut, logIn, getCurrentUser } from './auth-operations';
 
 const initialUserState = {
-  accessToken: null,
-  refreshToken: null,
-  profile: { name: null, email: null },
+  user: { name: null, email: null },
   token: null,
-  isLoginLoading: false,
-  isProfileLoading: false,
+  isLoggedIn: false,
+  isFetchingCurrentUser: false,
+  error: null,
 };
 
 const authSlice = createSlice({
   name: 'auth',
-  initialState,
-  reducers: {
-    setNewCredentials(state, { payload }) {
-      state.accessToken = payload.accessToken;
-      state.refreshToken = payload.refreshToken;
+  initialUserState,
+
+  extraReducers: {
+    [register.fulfilled](state, action) {
+      state.user = action.payload.user;
+      state.token = action.payload.token;
+      state.isLoggedIn = true;
+      state.error = null;
+    },
+    [register.rejected](state, action) {
+      state.error = action.payload;
+    },
+    [logIn.fulfilled](state, action) {
+      state.user = action.payload.user;
+      state.token = action.payload.token;
+      state.isLoggedIn = true;
+      state.error = null;
+    },
+    [logIn.rejected](state, action) {
+      state.error = action.payload;
+    },
+    [logOut.fulfilled](state) {
+      state.user = { name: null, email: null };
+      state.token = null;
+      state.isLoggedIn = false;
+    },
+    [getCurrentUser.pending](state) {
+      state.isFetchingCurrentUser = true;
+    },
+    [getCurrentUser.fulfilled](state, action) {
+      state.user = action.payload;
+      state.isLoggedIn = true;
+      state.isFetchingCurrentUser = false;
+    },
+    [getCurrentUser.rejected](state) {
+      state.isFetchingCurrentUser = false;
     },
   },
-  extraReducers: builder => {
-    builder
-      .addCase(logIn.pending, state => {
-        state.isLoginLoading = true;
-      })
-      .addCase(logIn.fulfilled, (state, { payload }) => {
-        state.accessToken = payload.accessToken;
-        state.refreshToken = payload.refreshToken;
-        state.isLoginLoading = false;
-        state.error = null;
-      })
-      .addCase(logIn.rejected, (state, { payload }) => {
-        state.isLoginLoading = false;
-      })
-      .addCase(getProfileThunk.pending, state => {
-        state.isProfileLoading = true;
-      })
-      .addCase(getProfileThunk.fulfilled, (state, { payload }) => {
-        state.profile = payload;
-        state.isProfileLoading = false;
-        state.error = null;
-      })
-      .addCase(getProfileThunk.rejected, (state, { payload }) => {
-        state.isProfileLoading = false;
-      });
-  },
 });
-
-const { setNewCredentials } = authSlice.actions;
 
 export default authSlice.reducer;
