@@ -1,26 +1,40 @@
 import { Button, Form, Container } from 'react-bootstrap';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-// import { loginThunk } from '../store/modules/auth/slice';
+import { register } from 'redux/auth/auth-operations';
 
 const Registration = () => {
   const dispatch = useDispatch();
-  const [blank, setBlank] = useState({
-    username: '',
-    email: '',
-    password: '',
-  });
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const onChange = e => {
-    setForm(prevForm => ({
-      ...prevForm,
-      [e.target.name]: e.target.value,
-    }));
+  const onChange = ({ target: { name, value } }) => {
+    switch (name) {
+      case 'name':
+        return setName(value);
+      case 'email':
+        return setEmail(value);
+      case 'password':
+        return setPassword(value);
+      default:
+        return;
+    }
   };
 
   const onSubmit = e => {
     e.preventDefault();
-    dispatch(loginThunk(blank));
+    if (name === '' || email === '' || password === '') {
+      alert('Please enter all fields');
+      return;
+    }
+    dispatch(register({ name, email, password })).then(({ meta }) => {
+      if (meta.requestStatus === 'fulfilled') {
+        setName('');
+        setEmail('');
+        setPassword('');
+      }
+    });
   };
 
   return (
@@ -29,7 +43,7 @@ const Registration = () => {
         <Form.Group className="mb-3" controlId="formBasicUsername">
           <Form.Label>Username</Form.Label>
           <Form.Control
-            value={blank.username}
+            value={name}
             type="text"
             name="username"
             placeholder="Enter username"
@@ -40,7 +54,7 @@ const Registration = () => {
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
           <Form.Control
-            value={blank.email}
+            value={email}
             type="email"
             name="email"
             placeholder="Email"
@@ -51,7 +65,7 @@ const Registration = () => {
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
           <Form.Control
-            value={blank.password}
+            value={password}
             type="password"
             name="password"
             placeholder="Password"

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { nanoid } from 'nanoid';
 // import React, { Component } from 'react';
 // import PropTypes from 'prop-types';
 // import s from './Form.module.css';
@@ -13,10 +12,8 @@ import { Form, InputGroup, Button } from 'react-bootstrap';
 const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
-  const nameInputId = nanoid();
-  const numberInputId = nanoid();
 
-  const [createContact] = useCreateContactMutation();
+  const [createContact, { isLoading: isAdding }] = useCreateContactMutation();
   const { data } = useFetchContactsQuery();
   const contacts = data;
 
@@ -39,6 +36,12 @@ const ContactForm = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
+
+    if (name === '' || number === '') {
+      alert(`Please fill all fields`);
+      return;
+    }
+
     if (
       contacts.some(
         contact => contact.name.toLowerCase() === name.toLowerCase()
@@ -55,10 +58,7 @@ const ContactForm = () => {
   return (
     <InputGroup onSubmit={handleSubmit} hasValidation>
       <InputGroup className="mb-3">
-        <InputGroup.Text id="basic-addon1" htmlFor={nameInputId}>
-          {' '}
-          Name
-        </InputGroup.Text>
+        <InputGroup.Text id="basic-addon1"> Name</InputGroup.Text>
         <Form.Control
           type="text"
           name="name"
@@ -67,17 +67,13 @@ const ContactForm = () => {
           requiredisInvalid
           value={name}
           onChange={handleChange}
-          id={nameInputId}
         />
         <Form.Control.Feedback type="invalid">
           Please choose a username.
         </Form.Control.Feedback>
       </InputGroup>
       <InputGroup className="mb-3">
-        <InputGroup.Text id="basic-addon1" htmlFor={numberInputId}>
-          {' '}
-          Number
-        </InputGroup.Text>
+        <InputGroup.Text id="basic-addon1"> Number</InputGroup.Text>
         <Form.Control
           type="tel"
           name="number"
@@ -86,13 +82,17 @@ const ContactForm = () => {
           requiredisInvalid
           value={number}
           onChange={handleChange}
-          id={numberInputId}
         />
         <Form.Control.Feedback type="invalid">
           Please choose a username.
         </Form.Control.Feedback>
       </InputGroup>
-      <Button as="input" type="submit" value=" Add contact" />
+      <Button
+        as="input"
+        type="submit"
+        value=" Add contact"
+        disabled={isAdding}
+      />
     </InputGroup>
   );
 };

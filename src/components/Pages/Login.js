@@ -1,25 +1,36 @@
 import { Button, Form, Container } from 'react-bootstrap';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-// import { loginThunk } from '../store/modules/auth/slice';
+import { logIn } from '../../redux/auth/auth-operations';
 
 const Login = () => {
   const dispatch = useDispatch();
-  const [form, setForm] = useState({
-    email: '',
-    password: '',
-  });
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const onChange = e => {
-    setForm(prevForm => ({
-      ...prevForm,
-      [e.target.name]: e.target.value,
-    }));
+  const onChange = ({ target: { name, value } }) => {
+    switch (name) {
+      case 'email':
+        return setEmail(value);
+      case 'password':
+        return setPassword(value);
+      default:
+        return;
+    }
   };
 
   const onSubmit = e => {
     e.preventDefault();
-    dispatch(loginThunk(form));
+    if (email === '' || password === '') {
+      alert('Please enter all fields');
+      return;
+    }
+    dispatch(logIn({ email, password })).then(({ meta }) => {
+      if (meta.requestStatus === 'fulfilled') {
+        setEmail('');
+        setPassword('');
+      }
+    });
   };
 
   return (
@@ -28,7 +39,7 @@ const Login = () => {
         <Form.Group className="mb-3" controlId="formBasicUsername">
           <Form.Label>Email</Form.Label>
           <Form.Control
-            value={form.email}
+            value={email}
             type="text"
             name="email"
             placeholder="Enter email"
@@ -39,7 +50,7 @@ const Login = () => {
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
           <Form.Control
-            value={form.password}
+            value={password}
             type="password"
             name="password"
             placeholder="Password"

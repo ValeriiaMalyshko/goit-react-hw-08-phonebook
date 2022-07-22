@@ -12,65 +12,64 @@ const token = {
   },
 };
 
-const register = createAsyncThunk(
-  'auth/register',
-  async (credentials, { rejectWithValue }) => {
-    try {
-      const response = await axios.post('/users/signup', credentials);
-      token.set(response.data.token);
-      return response.data;
-    } catch (error) {
-      alert(error.message);
-      return rejectWithValue(error.message);
-    }
+export const register = createAsyncThunk('auth/register', async credentials => {
+  try {
+    const response = await axios.post('/users/signup', credentials);
+    token.set(response.data.token);
+    return response.data;
+  } catch (error) {
+    alert(error.message);
+    // return error.message;
   }
-);
+});
 
-const logIn = createAsyncThunk(
-  '/auth/login',
-  async (credentials, { rejectWithValue }) => {
-    try {
-      const response = await axios.post('/users/login', credentials);
-      token.set(response.data.token);
-      return response.data;
-    } catch (error) {
-      alert(error.message);
-      return rejectWithValue(error.message);
-    }
+export const logIn = createAsyncThunk('/auth/login', async credentials => {
+  try {
+    const response = await axios.post('/users/login', credentials);
+    token.set(response.data.token);
+    return response.data;
+  } catch (error) {
+    alert(error.message);
+    // return error.message;
   }
-);
+});
 
-const logOut = createAsyncThunk('auth/logout', async () => {
+export const logOut = createAsyncThunk('auth/logout', async () => {
   try {
     await axios.post('/users/logout');
     token.unset();
   } catch (error) {
-    return error.message;
+    alert(error.message);
+    // return error.message;
   }
 });
 
-const getCurrentUser = createAsyncThunk('auth/refresh', async (_, thunkAPI) => {
-  const state = thunkAPI.getState();
-  const persistedToken = state.auth.token;
+export const getCurrentUser = createAsyncThunk(
+  'auth/refresh',
+  async (_, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const persistedToken = state.auth.token;
 
-  if (!persistedToken) {
-    return;
+    if (!persistedToken) {
+      return thunkAPI.rejectWithValue();
+    }
+
+    token.set(persistedToken);
+
+    try {
+      const response = await axios.get('/users/current');
+
+      return response.data;
+    } catch (error) {
+      alert(error.message);
+      // return error.message;
+    }
   }
-
-  token.set(persistedToken);
-
-  try {
-    const response = await axios.get('/users/current');
-
-    return response.data;
-  } catch (error) {
-    return error.message;
-  }
-});
-const operations = {
-  register,
-  logOut,
-  logIn,
-  getCurrentUser,
-};
-export default operations;
+);
+// const operations = {
+//   register,
+//   logOut,
+//   logIn,
+//   getCurrentUser,
+// };
+// export default operations;
