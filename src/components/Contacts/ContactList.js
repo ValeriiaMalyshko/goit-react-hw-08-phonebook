@@ -16,13 +16,11 @@ const ContactList = () => {
     );
 
     return (
-      // <ul className={s.ul}>
       <ListGroup>
         {visibleContacts.map(({ id, name, phone }) => {
           return <Contact key={id} id={id} name={name} phone={phone} />;
         })}
       </ListGroup>
-      // </ul>
     );
   }
 };

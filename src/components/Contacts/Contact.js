@@ -7,19 +7,6 @@ import { Button, ListGroup } from 'react-bootstrap';
 export default function Contact({ id, name, phone }) {
   const [deleteContact, { isLoading: isDeleting }] = useDeleteContactMutation();
   return (
-    // <li className={s.li}>
-    //   <span>
-    //     {name} : {phone}
-    //   </span>
-    //   <button
-    //     className={s.btn}
-    //     type="button"
-    //     onClick={() => deleteContact(id)}
-    //     disabled={isDeleting}
-    //   >
-    //     Delete
-    //   </button>
-    //   </li>
     <ListGroup.Item>
       <span>
         {name} : {phone}

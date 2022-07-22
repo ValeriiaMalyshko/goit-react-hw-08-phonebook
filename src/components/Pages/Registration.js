@@ -3,10 +3,11 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 // import { loginThunk } from '../store/modules/auth/slice';
 
-const Login = () => {
+const Registration = () => {
   const dispatch = useDispatch();
-  const [form, setForm] = useState({
+  const [blank, setBlank] = useState({
     username: '',
+    email: '',
     password: '',
   });
 
@@ -19,7 +20,7 @@ const Login = () => {
 
   const onSubmit = e => {
     e.preventDefault();
-    dispatch(loginThunk(form));
+    dispatch(loginThunk(blank));
   };
 
   return (
@@ -28,7 +29,7 @@ const Login = () => {
         <Form.Group className="mb-3" controlId="formBasicUsername">
           <Form.Label>Username</Form.Label>
           <Form.Control
-            value={form.username}
+            value={blank.username}
             type="text"
             name="username"
             placeholder="Enter username"
@@ -39,7 +40,18 @@ const Login = () => {
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
           <Form.Control
-            value={form.password}
+            value={blank.email}
+            type="email"
+            name="email"
+            placeholder="Email"
+            onChange={onChange}
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            value={blank.password}
             type="password"
             name="password"
             placeholder="Password"
@@ -48,11 +60,11 @@ const Login = () => {
         </Form.Group>
 
         <Button variant="primary" type="submit">
-          Login
+          Registration
         </Button>
       </Form>
     </Container>
   );
 };
 
-export default Login;
+export default Registration;
