@@ -1,7 +1,5 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
-import s from './Filter.module.css';
-// import { connect } from 'react-redux';
+import { Form, InputGroup } from 'react-bootstrap';
 import { changeFilter } from '../../redux/filter-reducer';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -11,16 +9,18 @@ const Filter = () => {
   const onChange = e => dispatch(changeFilter(e.target.value));
 
   return (
-    <label className={s.label}>
-      Find contacts by name
-      <input
-        className={s.input}
+    <InputGroup className="mb-3">
+      <InputGroup.Text id="basic-addon1">Find contacts by name</InputGroup.Text>
+      <Form.Control
+        placeholder="Username"
+        aria-label="Username"
+        aria-describedby="basic-addon1"
         type="text"
         name="filter"
         value={filter}
         onChange={onChange}
       />
-    </label>
+    </InputGroup>
   );
 };
 

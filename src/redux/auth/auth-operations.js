@@ -67,5 +67,10 @@ const getCurrentUser = createAsyncThunk('auth/refresh', async (_, thunkAPI) => {
     return error.message;
   }
 });
-
-export default { register, logOut, logIn, getCurrentUser };
+const operations = {
+  register,
+  logOut,
+  logIn,
+  getCurrentUser,
+};
+export default operations;
