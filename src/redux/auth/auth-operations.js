@@ -14,9 +14,9 @@ const token = {
 
 export const register = createAsyncThunk('auth/register', async credentials => {
   try {
-    const response = await axios.post('/users/signup', credentials);
-    token.set(response.data.token);
-    return response.data;
+    const { data } = await axios.post('/users/signup', credentials);
+    token.set(data.token);
+    return data;
   } catch (error) {
     alert(error.message);
     // return error.message;
@@ -25,9 +25,9 @@ export const register = createAsyncThunk('auth/register', async credentials => {
 
 export const logIn = createAsyncThunk('/auth/login', async credentials => {
   try {
-    const response = await axios.post('/users/login', credentials);
-    token.set(response.data.token);
-    return response.data;
+    const { data } = await axios.post('/users/login', credentials);
+    token.set(data.token);
+    return data;
   } catch (error) {
     alert(error.message);
     // return error.message;
@@ -50,16 +50,16 @@ export const getCurrentUser = createAsyncThunk(
     const state = thunkAPI.getState();
     const persistedToken = state.auth.token;
 
-    if (!persistedToken) {
+    if (persistedToken === null) {
       return thunkAPI.rejectWithValue();
     }
 
     token.set(persistedToken);
 
     try {
-      const response = await axios.get('/users/current');
+      const { data } = await axios.get('/users/current');
 
-      return response.data;
+      return data;
     } catch (error) {
       alert(error.message);
       // return error.message;
