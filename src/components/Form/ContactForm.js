@@ -3,7 +3,7 @@ import {
   useCreateContactMutation,
   useFetchContactsQuery,
 } from 'redux/contacts-Slice';
-import { Form, InputGroup, Button } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 
 const ContactForm = () => {
   const [name, setName] = useState('');
@@ -52,32 +52,34 @@ const ContactForm = () => {
   };
 
   return (
-    <InputGroup onSubmit={handleSubmit}>
-      <InputGroup className="mb-3">
-        <InputGroup.Text id="basic-addon1"> Name</InputGroup.Text>
-        <Form.Control
-          type="text"
-          name="name"
-          value={name}
-          onChange={handleChange}
-        />
-      </InputGroup>
-      <InputGroup className="mb-3">
-        <InputGroup.Text id="basic-addon1"> Number</InputGroup.Text>
-        <Form.Control
-          type="tel"
-          name="number"
-          value={number}
-          onChange={handleChange}
-        />
-      </InputGroup>
-      <Button
-        as="input"
-        type="submit"
-        value=" Add contact"
-        disabled={isAdding}
-      />
-    </InputGroup>
+    <>
+      <Form className="mt-4" onSubmit={handleSubmit}>
+        <Form.Group className="mb-3">
+          <Form.Label>Name</Form.Label>
+          <Form.Control
+            name="name"
+            value={name}
+            onChange={handleChange}
+            type="text"
+            placeholder="Enter name"
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label>Number</Form.Label>
+          <Form.Control
+            name="number"
+            value={number}
+            onChange={handleChange}
+            type="tel"
+            placeholder="Enter number"
+          />
+        </Form.Group>
+        <Button variant="primary" type="submit" disabled={isAdding}>
+          Add contact
+        </Button>
+      </Form>
+    </>
   );
 };
 

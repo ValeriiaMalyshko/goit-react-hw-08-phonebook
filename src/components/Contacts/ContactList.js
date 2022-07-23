@@ -17,8 +17,8 @@ const ContactList = () => {
       <h1> Loading....</h1>
     ) : (
       <ListGroup>
-        {visibleContacts.map(({ id, name, phone }) => {
-          return <Contact key={id} id={id} name={name} phone={phone} />;
+        {visibleContacts.map(({ id, name, number }) => {
+          return <Contact key={id} id={id} name={name} number={number} />;
         })}
       </ListGroup>
     );

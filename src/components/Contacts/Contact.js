@@ -3,17 +3,18 @@ import propTypes from 'prop-types';
 import { useDeleteContactMutation } from 'redux/contacts-Slice';
 import { Button, ListGroup } from 'react-bootstrap';
 
-export default function Contact({ id, name, phone }) {
+export default function Contact({ id, name, number }) {
   const [deleteContact, { isLoading: isDeleting }] = useDeleteContactMutation();
   return (
     <ListGroup.Item>
       <span>
-        {name} : {phone}
+        {name} : {number}
       </span>
       <Button
         variant="danger"
         onClick={() => deleteContact(id)}
         disabled={isDeleting}
+        style={{ marginLeft: '10px' }}
       >
         Delete
       </Button>
@@ -24,5 +25,5 @@ export default function Contact({ id, name, phone }) {
 Contact.propTypes = {
   id: propTypes.string.isRequired,
   name: propTypes.string.isRequired,
-  phone: propTypes.string.isRequired,
+  number: propTypes.string.isRequired,
 };
