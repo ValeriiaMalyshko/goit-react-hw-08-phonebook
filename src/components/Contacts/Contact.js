@@ -1,6 +1,5 @@
 import React from 'react';
 import propTypes from 'prop-types';
-// import s from './Contact.module.css';
 import { useDeleteContactMutation } from 'redux/contacts-Slice';
 import { Button, ListGroup } from 'react-bootstrap';
 

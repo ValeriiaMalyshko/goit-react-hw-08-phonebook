@@ -1,9 +1,11 @@
 // import React from 'react';
+import { Container } from 'react-bootstrap';
 import React, { lazy, Suspense, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { getCurrentUser } from '../redux/auth/auth-operations';
-import UserMenu from './Pages/UserMenu';
+import { fetchCurrentUser } from '../redux/auth/auth-operations';
+import authSelectors from 'redux/auth/auth-selectors';
+import UserMenu from './Pages/UserMenu/UserMenu';
 import PublicRoute from './PublicRoute ';
 import PrivateRoute from './PrivateRoute';
 
@@ -13,13 +15,15 @@ const ContactsProfile = lazy(() => import('./Pages/ContactsProfile'));
 
 export default function App() {
   const dispatch = useDispatch();
-  const getIsFetchingCurrent = state => state.auth.isFetchingCurrentUser;
-  const isFetchingCurrentUser = useSelector(getIsFetchingCurrent);
+  const isFetchingCurrentUser = useSelector(authSelectors.getIsFetchingCurrent);
   useEffect(() => {
-    dispatch(getCurrentUser());
+    dispatch(fetchCurrentUser());
   }, [dispatch]);
   return (
-    <>
+    <Container
+      className="p-3 rounded border border-1 bg-light mt-2"
+      style={{ maxWidth: '500px' }}
+    >
       {isFetchingCurrentUser ? (
         <h1>Loading....</h1>
       ) : (
@@ -42,6 +46,6 @@ export default function App() {
           </Suspense>
         </>
       )}
-    </>
+    </Container>
   );
 }

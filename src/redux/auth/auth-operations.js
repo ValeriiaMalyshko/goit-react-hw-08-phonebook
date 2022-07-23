@@ -5,7 +5,7 @@ axios.defaults.baseURL = 'https://connections-api.herokuapp.com';
 
 const token = {
   set(token) {
-    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+    axios.defaults.headers.common.Authorization = token;
   },
   unset() {
     axios.defaults.headers.common.Authorization = '';
@@ -44,7 +44,7 @@ export const logOut = createAsyncThunk('auth/logout', async () => {
   }
 });
 
-export const getCurrentUser = createAsyncThunk(
+export const fetchCurrentUser = createAsyncThunk(
   'auth/refresh',
   async (_, thunkAPI) => {
     const state = thunkAPI.getState();
@@ -70,6 +70,6 @@ export const getCurrentUser = createAsyncThunk(
 //   register,
 //   logOut,
 //   logIn,
-//   getCurrentUser,
+//   fetchCurrentUser,
 // };
 // export default operations;

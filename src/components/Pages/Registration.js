@@ -41,18 +41,18 @@ const Registration = () => {
     <Container>
       <Form onSubmit={onSubmit}>
         <Form.Group className="mb-3" controlId="formBasicUsername">
-          <Form.Label>Username</Form.Label>
+          <Form.Label>Name</Form.Label>
           <Form.Control
             value={name}
             type="text"
-            name="username"
-            placeholder="Enter username"
+            name="name"
+            placeholder="Enter name"
             onChange={onChange}
           />
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>Email</Form.Label>
           <Form.Control
             value={email}
             type="email"

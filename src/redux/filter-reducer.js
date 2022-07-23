@@ -3,6 +3,6 @@ import { createReducer } from '@reduxjs/toolkit';
 
 export const changeFilter = createAction('contacts/filter');
 
-export const filterReducer = createReducer('', {
+export const filter = createReducer('', {
   [changeFilter]: (_, { payload }) => payload,
 });

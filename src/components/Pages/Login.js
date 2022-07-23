@@ -40,7 +40,7 @@ const Login = () => {
           <Form.Label>Email</Form.Label>
           <Form.Control
             value={email}
-            type="text"
+            type="email"
             name="email"
             placeholder="Enter email"
             onChange={onChange}
